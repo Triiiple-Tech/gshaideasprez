@@ -37,6 +37,8 @@ export default function TypingAnimation({
 
   // Typing effect
   useEffect(() => {
+    if (!autoStart) return;
+
     if (currentIndex < text.length) {
       const timer = setTimeout(() => {
         setDisplayText((prev) => prev + text[currentIndex]);
@@ -46,7 +48,11 @@ export default function TypingAnimation({
       return () => clearTimeout(timer);
     } else if (!isComplete) {
       setIsComplete(true);
-      onComplete?.();
+
+      // Call onComplete after a short delay to ensure state is updated
+      setTimeout(() => {
+        onComplete?.();
+      }, 100);
 
       // Trigger flicker effect if specified
       if (flickerWord && flickerReplace) {
@@ -66,6 +72,7 @@ export default function TypingAnimation({
     onComplete,
     flickerWord,
     flickerReplace,
+    autoStart,
   ]);
 
   const getDisplayTextWithFlicker = () => {
@@ -80,19 +87,16 @@ export default function TypingAnimation({
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="font-['Permanent_Marker'] text-white"
+        className="font-['Permanent_Marker'] text-gray-800"
       >
         {getDisplayTextWithFlicker()}
-        <AnimatePresence>
-          {showCursor && (
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="inline-block w-1 h-8 bg-white ml-1 animate-pulse"
-            />
-          )}
-        </AnimatePresence>
+        {showCursor && (
+          <motion.span
+            initial={{ opacity: 1 }}
+            animate={{ opacity: showCursor ? 1 : 0 }}
+            className="inline-block w-0.5 h-6 bg-gray-800 ml-1"
+          />
+        )}
       </motion.span>
 
       {isFlickering && (
