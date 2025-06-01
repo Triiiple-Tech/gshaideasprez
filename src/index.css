@@ -245,6 +245,28 @@
     }
   }
 
+  @keyframes flame-burst {
+    0% {
+      opacity: 0;
+      transform: scale(0) rotate(0deg);
+      filter: blur(0px);
+    }
+    20% {
+      opacity: 0.8;
+      transform: scale(1.2) rotate(5deg);
+      filter: blur(2px);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.5) rotate(-3deg);
+      filter: blur(1px);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(2) rotate(10deg);
+      filter: blur(4px);
+    }
+  }
   /* Animation classes */
   .animate-flicker {
     animation: flicker 2s ease-in-out infinite;
@@ -268,6 +290,10 @@
 
   .animate-pulse-glow {
     animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  .animate-flame-burst {
+    animation: flame-burst 1.2s ease-out forwards;
   }
 
   /* Accessibility */
