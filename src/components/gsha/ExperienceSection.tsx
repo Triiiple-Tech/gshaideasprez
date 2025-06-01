@@ -348,7 +348,7 @@ export default function ExperienceSection({
 
       {/* Thematic background animations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {experience.interactiveType === 'flames' && (
+        {experience.interactiveType === "flames" && (
           <>
             {/* Bottom flame strips */}
             {[...Array(12)].map((_, i) => (
@@ -359,12 +359,12 @@ export default function ExperienceSection({
                 animate={{
                   height: [30, 60, 30],
                   opacity: [0.3, 0.8, 0.3],
-                  scaleX: [1, 1.2, 1]
+                  scaleX: [1, 1.2, 1],
                 }}
                 transition={{
                   duration: 2 + Math.random() * 1.5,
                   repeat: Infinity,
-                  delay: i * 0.2
+                  delay: i * 0.2,
                 }}
               />
             ))}
@@ -376,25 +376,25 @@ export default function ExperienceSection({
                 className="absolute w-1 h-1 bg-orange-400 rounded-full"
                 style={{
                   left: `${20 + Math.random() * 60}%`,
-                  bottom: '10%'
+                  bottom: "10%",
                 }}
                 animate={{
                   y: [0, -100, -200],
                   x: [0, Math.random() * 20 - 10],
                   opacity: [0, 1, 0],
-                  scale: [0.5, 1, 0.5]
+                  scale: [0.5, 1, 0.5],
                 }}
                 transition={{
                   duration: 4,
                   repeat: Infinity,
-                  delay: Math.random() * 3
+                  delay: Math.random() * 3,
                 }}
               />
             ))}
           </>
         )}
 
-        {experience.interactiveType === 'stars' && (
+        {experience.interactiveType === "stars" && (
           <>
             {/* Twinkling stars */}
             {[...Array(20)].map((_, i) => (
@@ -403,16 +403,16 @@ export default function ExperienceSection({
                 className="absolute w-1 h-1 bg-white/40 rounded-full"
                 style={{
                   left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`
+                  top: `${Math.random() * 100}%`,
                 }}
                 animate={{
                   opacity: [0.2, 1, 0.2],
-                  scale: [0.5, 1.5, 0.5]
+                  scale: [0.5, 1.5, 0.5],
                 }}
                 transition={{
                   duration: 3 + Math.random() * 2,
                   repeat: Infinity,
-                  delay: Math.random() * 3
+                  delay: Math.random() * 3,
                 }}
               />
             ))}
@@ -429,12 +429,12 @@ export default function ExperienceSection({
                   stroke="#FFD700"
                   strokeWidth="1"
                   animate={{
-                    opacity: [0.1, 0.6, 0.1]
+                    opacity: [0.1, 0.6, 0.1],
                   }}
                   transition={{
                     duration: 4,
                     repeat: Infinity,
-                    delay: i * 0.8
+                    delay: i * 0.8,
                   }}
                 />
               ))}
@@ -442,7 +442,7 @@ export default function ExperienceSection({
           </>
         )}
 
-        {experience.interactiveType === 'maze' && (
+        {experience.interactiveType === "maze" && (
           <svg className="absolute inset-0 w-full h-full opacity-15">
             {/* Maze paths */}
             {[...Array(4)].map((_, i) => (
@@ -455,13 +455,13 @@ export default function ExperienceSection({
                 filter="drop-shadow(0 0 3px currentColor)"
                 animate={{
                   pathLength: [0, 1],
-                  opacity: [0.3, 0.8, 0.3]
+                  opacity: [0.3, 0.8, 0.3],
                 }}
                 transition={{
                   duration: 6,
                   repeat: Infinity,
                   delay: i * 1.5,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
                 }}
               />
             ))}
@@ -476,17 +476,16 @@ export default function ExperienceSection({
                 fill={experience.color}
                 animate={{
                   opacity: [0.4, 1, 0.4],
-                  r: [2, 4, 2]
+                  r: [2, 4, 2],
                 }}
                 transition={{
                   duration: 3,
                   repeat: Infinity,
-                  delay: i * 0.5
+                  delay: i * 0.5,
                 }}
               />
             ))}
           </svg>
-        )}
         )}
       </div>
 
