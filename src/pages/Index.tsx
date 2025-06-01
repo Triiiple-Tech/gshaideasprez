@@ -177,18 +177,18 @@ export default function Index() {
         onClose={handleCloseContactModal}
       />
 
-      {/* Sound Control - Positioned at top right to avoid logo overlap */}
+      {/* Sound Control - Positioned at top right */}
       <motion.button
         onClick={() => soundManager.toggleMute()}
-        className="fixed top-6 right-6 z-50 w-12 h-12 bg-black/80 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+        className="fixed top-6 right-6 z-50 w-12 h-12 bg-black/80 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center text-white hover:bg-white/10 transition-colors shadow-lg"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         title={soundManager.isSoundMuted() ? "Enable Sound" : "Mute Sound"}
         initial={{ opacity: 0 }}
-        animate={{ opacity: showNavigation ? 1 : 0 }}
+        animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
       >
-        <span className="text-xs">
+        <span className="text-sm">
           {soundManager.isSoundMuted() ? "🔇" : "🔊"}
         </span>
 
@@ -197,8 +197,8 @@ export default function Index() {
           <motion.div
             className="absolute inset-0 rounded-full border-2 border-white/30"
             animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.3, 0.7, 0.3],
+              scale: [1, 1.4, 1],
+              opacity: [0.3, 0.8, 0.3],
             }}
             transition={{ duration: 2, repeat: Infinity }}
           />

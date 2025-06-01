@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface TypingAnimationProps {
   text: string;
@@ -14,15 +14,15 @@ interface TypingAnimationProps {
 export default function TypingAnimation({
   text,
   className = "",
-  speed = 80, // ~50 WPM (average typing speed)
+  speed = 50, // Faster for better UX
   onComplete,
   flickerWord,
   flickerReplace,
   autoStart = true,
 }: TypingAnimationProps) {
-  const [displayText, setDisplayText] = useState(autoStart ? "" : text);
-  const [currentIndex, setCurrentIndex] = useState(autoStart ? 0 : text.length);
-  const [isComplete, setIsComplete] = useState(!autoStart);
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
   const [showCursor, setShowCursor] = useState(true);
   const [isFlickering, setIsFlickering] = useState(false);
 
@@ -35,24 +35,21 @@ export default function TypingAnimation({
     return () => clearInterval(cursorInterval);
   }, []);
 
-  // Typing effect
+  // Typing effect - simplified and more reliable
   useEffect(() => {
-    if (!autoStart) return;
+    if (!autoStart || isComplete) return;
 
     if (currentIndex < text.length) {
       const timer = setTimeout(() => {
-        setDisplayText((prev) => prev + text[currentIndex]);
+        setDisplayText(text.slice(0, currentIndex + 1));
         setCurrentIndex((prev) => prev + 1);
       }, speed);
 
       return () => clearTimeout(timer);
-    } else if (!isComplete) {
+    } else {
+      // Animation complete
       setIsComplete(true);
-
-      // Call onComplete after a short delay to ensure state is updated
-      setTimeout(() => {
-        onComplete?.();
-      }, 100);
+      onComplete?.();
 
       // Trigger flicker effect if specified
       if (flickerWord && flickerReplace) {
@@ -75,6 +72,14 @@ export default function TypingAnimation({
     autoStart,
   ]);
 
+  // Initialize with full text if autoStart is false
+  useEffect(() => {
+    if (!autoStart) {
+      setDisplayText(text);
+      setIsComplete(true);
+    }
+  }, [autoStart, text]);
+
   const getDisplayTextWithFlicker = () => {
     if (!flickerWord || !flickerReplace || !isFlickering) {
       return displayText;
@@ -84,20 +89,12 @@ export default function TypingAnimation({
 
   return (
     <div className={`relative ${className}`}>
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="font-['Permanent_Marker'] text-gray-800"
-      >
+      <span className="text-gray-800 font-normal">
         {getDisplayTextWithFlicker()}
-        {showCursor && (
-          <motion.span
-            initial={{ opacity: 1 }}
-            animate={{ opacity: showCursor ? 1 : 0 }}
-            className="inline-block w-0.5 h-6 bg-gray-800 ml-1"
-          />
+        {showCursor && !isComplete && (
+          <span className="inline-block w-0.5 h-6 bg-gray-800 ml-1 animate-pulse" />
         )}
-      </motion.span>
+      </span>
 
       {isFlickering && (
         <motion.div

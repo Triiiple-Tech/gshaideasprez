@@ -31,7 +31,7 @@ export default function Navigation({
     { id: "hero", name: "Home", color: "#FFFFFF" },
     ...experiences.map((exp) => ({
       id: exp.id,
-      name: exp.name.split(" ").pop()!,
+      name: exp.name.split(" ").slice(-1)[0],
       color: exp.color,
     })),
     { id: "tech", name: "Tech", color: "#9F32E9" },
@@ -61,93 +61,78 @@ export default function Navigation({
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.1 }}
       >
-        {/* Orb - Increased size to 48-56px as requested */}
+        {/* Orb */}
         <div
           className={`
-            w-14 h-14 rounded-full border-2 backdrop-blur-sm
-            transition-all duration-300 relative overflow-hidden
+            w-16 h-16 rounded-full border-2 backdrop-blur-sm transition-all duration-300 relative overflow-hidden
             ${
               isActive
-                ? "bg-white/20 border-white shadow-lg shadow-white/50 scale-110"
-                : "bg-black/20 border-white/30 hover:bg-white/10"
+                ? "bg-white/30 border-white shadow-2xl scale-110"
+                : "bg-black/30 border-white/40 hover:bg-white/20"
             }
           `}
           style={{
             boxShadow: isActive
-              ? `0 0 20px ${section.color}50, 0 0 40px ${section.color}30`
-              : undefined,
+              ? `0 0 30px ${section.color}80, 0 0 60px ${section.color}40`
+              : "0 0 20px rgba(0,0,0,0.5)",
           }}
         >
           {/* Pulsing core */}
           <motion.div
-            className="absolute inset-2 rounded-full opacity-50"
+            className="absolute inset-3 rounded-full opacity-60"
             style={{ backgroundColor: section.color }}
             animate={
               isActive
                 ? {
-                    scale: [1, 1.2, 1],
-                    opacity: [0.5, 0.8, 0.5],
+                    scale: [1, 1.3, 1],
+                    opacity: [0.6, 0.9, 0.6],
                   }
                 : {}
             }
             transition={{ duration: 2, repeat: Infinity }}
           />
 
-          {/* Spark effect */}
-          <AnimatePresence>
-            {isActive && (
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: `radial-gradient(circle, ${section.color}40 0%, transparent 70%)`,
-                }}
-                initial={{ scale: 0, opacity: 1 }}
-                animate={{ scale: 2, opacity: 0 }}
-                exit={{ scale: 0, opacity: 0 }}
-                transition={{ duration: 1, repeat: Infinity }}
-              />
-            )}
-          </AnimatePresence>
+          {/* Active spark effect */}
+          {isActive && (
+            <motion.div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background: `radial-gradient(circle, ${section.color}60 0%, transparent 70%)`,
+              }}
+              initial={{ scale: 0, opacity: 1 }}
+              animate={{ scale: 2, opacity: 0 }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+          )}
         </div>
 
         {/* Label */}
         <motion.span
-          className="absolute top-14 left-1/2 transform -translate-x-1/2 text-xs text-white/80 whitespace-nowrap"
+          className="absolute top-20 left-1/2 transform -translate-x-1/2 text-sm text-white/80 whitespace-nowrap font-medium"
           initial={{ opacity: 0 }}
-          animate={{ opacity: isActive ? 1 : 0.6 }}
+          animate={{ opacity: isActive ? 1 : 0.7 }}
           whileHover={{ opacity: 1 }}
         >
           {section.name}
         </motion.span>
 
-        {/* Hover glow with microanimation */}
+        {/* Hover icon */}
         <motion.div
-          className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-300"
-          style={{
-            background: `radial-gradient(circle, ${section.color} 0%, transparent 70%)`,
-          }}
-          whileHover={{
-            scale: [1, 1.1, 1],
-            opacity: [0, 0.5, 0.3],
-          }}
-          transition={{ duration: 0.6 }}
-        />
-
-        {/* Flame/star microanimation on hover */}
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"
           whileHover={{
             scale: [1, 1.2, 1],
             rotate: [0, 10, -10, 0],
           }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
         >
-          <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+          <span className="text-lg">
             {section.id === "inferno"
               ? "🔥"
               : section.id === "constellation"
                 ? "⭐"
-                : "✨"}
+                : section.id === "tech"
+                  ? "⚡"
+                  : "✨"}
           </span>
         </motion.div>
       </motion.button>
@@ -157,12 +142,15 @@ export default function Navigation({
   if (isMobile) {
     return (
       <>
-        {/* Mobile FAB - Positioned to avoid sound button */}
+        {/* Mobile FAB */}
         <motion.button
           onClick={() => setIsOpen(!isOpen)}
-          className="fixed top-20 right-4 z-50 w-14 h-14 bg-black/80 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center text-white"
+          className="fixed top-6 right-20 z-50 w-14 h-14 bg-black/80 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center text-white shadow-lg"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
         >
           <AnimatePresence mode="wait">
             {isOpen ? (
@@ -196,7 +184,7 @@ export default function Navigation({
               initial={{ opacity: 0, scale: 0.9, y: -20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: -20 }}
-              className="fixed top-36 right-4 z-40 bg-black/90 backdrop-blur-sm border border-white/30 rounded-xl p-4 space-y-3"
+              className="fixed top-24 right-4 z-40 bg-black/90 backdrop-blur-sm border border-white/30 rounded-2xl p-6 space-y-4 shadow-2xl"
             >
               {sections.map((section, index) => (
                 <motion.button
@@ -206,10 +194,10 @@ export default function Navigation({
                     setIsOpen(false);
                   }}
                   className={`
-                    flex items-center space-x-3 w-full p-3 rounded-lg text-left transition-all duration-200
+                    flex items-center space-x-3 w-full p-4 rounded-lg text-left transition-all duration-200
                     ${
                       activeSection === section.id
-                        ? "bg-white/20 text-white"
+                        ? "bg-white/20 text-white shadow-lg"
                         : "text-white/70 hover:bg-white/10 hover:text-white"
                     }
                   `}
@@ -218,10 +206,10 @@ export default function Navigation({
                   transition={{ delay: index * 0.05 }}
                 >
                   <div
-                    className="w-3 h-3 rounded-full"
+                    className="w-4 h-4 rounded-full"
                     style={{ backgroundColor: section.color }}
                   />
-                  <span className="text-sm font-medium">{section.name}</span>
+                  <span className="font-medium">{section.name}</span>
                 </motion.button>
               ))}
             </motion.div>
@@ -240,14 +228,14 @@ export default function Navigation({
 
   return (
     <>
-      {/* Desktop Navigation - Positioned below search bar with proper spacing */}
+      {/* Desktop Navigation */}
       <motion.nav
-        className="fixed top-[35vh] left-1/2 transform -translate-x-1/2 z-40 bg-black/20 backdrop-blur-sm border border-white/20 rounded-full px-8 py-4"
-        initial={{ opacity: 0, y: -50 }}
+        className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40 bg-black/20 backdrop-blur-sm border border-white/20 rounded-full px-8 py-6 shadow-2xl"
+        initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 2 }}
+        transition={{ duration: 0.8, delay: 1.5 }}
       >
-        <div className="flex items-center space-x-8">
+        <div className="flex items-center space-x-6">
           {sections.map((section, index) => (
             <OrbButton key={section.id} section={section} index={index} />
           ))}
@@ -263,7 +251,7 @@ export default function Navigation({
         }}
       >
         <motion.div
-          className="h-full bg-white/30"
+          className="h-full bg-white/50"
           style={{ scaleX: scrollProgress, transformOrigin: "left" }}
           initial={{ scaleX: 0 }}
         />
