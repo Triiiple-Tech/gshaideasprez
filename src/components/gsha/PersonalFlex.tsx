@@ -9,10 +9,10 @@ export default function PersonalFlex() {
     <motion.section
       ref={ref}
       id="personal"
-      className="min-h-screen py-20 px-4 bg-black relative overflow-hidden flex items-center justify-center"
+      className="min-h-screen py-16 px-6 bg-black relative overflow-hidden flex items-center justify-center"
       initial={{ opacity: 0 }}
-      animate={{ opacity: isInView ? 1 : 0.3 }}
-      transition={{ duration: 0.8 }}
+      animate={{ opacity: isInView ? 1 : 0.6 }}
+      transition={{ duration: 0.6 }}
     >
       {/* Cinematic background */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />

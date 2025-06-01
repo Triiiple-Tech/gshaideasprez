@@ -167,10 +167,10 @@ export default function TechExplainer() {
     <motion.section
       ref={ref}
       id="tech"
-      className="min-h-screen py-20 px-4 bg-black relative overflow-hidden"
+      className="min-h-screen py-16 px-6 bg-black relative overflow-hidden flex items-center"
       initial={{ opacity: 0 }}
-      animate={{ opacity: isInView ? 1 : 0.3 }}
-      transition={{ duration: 0.8 }}
+      animate={{ opacity: isInView ? 1 : 0.6 }}
+      transition={{ duration: 0.6 }}
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20" />
