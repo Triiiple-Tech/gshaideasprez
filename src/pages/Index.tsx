@@ -1,39 +1,203 @@
-const Index = () => {
+import React, { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import HeroSection from "@/components/gsha/HeroSection";
+import Navigation from "@/components/gsha/Navigation";
+import ExperienceSection from "@/components/gsha/ExperienceSection";
+import TechExplainer from "@/components/gsha/TechExplainer";
+import PersonalFlex from "@/components/gsha/PersonalFlex";
+import ClosingCTA from "@/components/gsha/ClosingCTA";
+import ExperienceModal from "@/components/gsha/ExperienceModal";
+import ContactModal from "@/components/gsha/ContactModal";
+import ParticleBackground from "@/components/gsha/ParticleBackground";
+import { experiences, ExperienceData } from "@/lib/gsha-data";
+import { initializeSound, soundManager, playIgniteSound } from "@/lib/sounds";
+
+export default function Index() {
+  const [activeSection, setActiveSection] = useState("hero");
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [selectedExperience, setSelectedExperience] =
+    useState<ExperienceData | null>(null);
+  const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [showNavigation, setShowNavigation] = useState(false);
+
+  const sectionsRef = useRef<{ [key: string]: HTMLElement }>({});
+
+  // Initialize sound on component mount
+  useEffect(() => {
+    initializeSound();
+    return () => {
+      soundManager.stopAmbient();
+    };
+  }, []);
+
+  // Scroll tracking
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollTop / docHeight;
+      setScrollProgress(progress);
+
+      // Determine active section
+      const sections = [
+        "hero",
+        ...experiences.map((exp) => exp.id),
+        "tech",
+        "personal",
+        "cta",
+      ];
+
+      for (const sectionId of sections) {
+        const element = sectionsRef.current[sectionId];
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (
+            rect.top <= window.innerHeight / 2 &&
+            rect.bottom >= window.innerHeight / 2
+          ) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Initial call
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Handle section navigation
+  const handleSectionClick = (sectionId: string) => {
+    const element = sectionsRef.current[sectionId];
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  // Handle ignite button click
+  const handleIgniteClick = () => {
+    playIgniteSound();
+    setShowNavigation(true);
+
+    // Scroll to first experience with a fire animation
+    setTimeout(() => {
+      handleSectionClick(experiences[0].id);
+    }, 500);
+  };
+
+  // Modal handlers
+  const handleOpenExperienceModal = (experience: ExperienceData) => {
+    setSelectedExperience(experience);
+    setIsExperienceModalOpen(true);
+  };
+
+  const handleCloseExperienceModal = () => {
+    setIsExperienceModalOpen(false);
+    setSelectedExperience(null);
+  };
+
+  const handleOpenContactModal = () => {
+    setIsContactModalOpen(true);
+  };
+
+  const handleCloseContactModal = () => {
+    setIsContactModalOpen(false);
+  };
+
+  // Register section refs
+  const registerSectionRef = (id: string) => (ref: HTMLElement | null) => {
+    if (ref) {
+      sectionsRef.current[id] = ref;
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+      {/* Particle Background */}
+      <ParticleBackground intensity={0.8} />
+
+      {/* Navigation */}
+      {showNavigation && (
+        <Navigation
+          activeSection={activeSection}
+          onSectionClick={handleSectionClick}
+          scrollProgress={scrollProgress}
+        />
+      )}
+
+      {/* Hero Section */}
+      <div ref={registerSectionRef("hero")}>
+        <HeroSection onIgniteClick={handleIgniteClick} />
+      </div>
+
+      {/* Experience Sections */}
+      {experiences.map((experience, index) => (
+        <div key={experience.id} ref={registerSectionRef(experience.id)}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-20%" }}
+            transition={{ duration: 0.8 }}
           >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
+            <ExperienceSection
+              experience={experience}
+              onOpenModal={handleOpenExperienceModal}
             />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
+          </motion.div>
+        </div>
+      ))}
+
+      {/* Tech Explainer */}
+      <div ref={registerSectionRef("tech")}>
+        <TechExplainer />
+      </div>
+
+      {/* Personal Flex */}
+      <div ref={registerSectionRef("personal")}>
+        <PersonalFlex />
+      </div>
+
+      {/* Closing CTA */}
+      <div ref={registerSectionRef("cta")}>
+        <ClosingCTA onOpenContactModal={handleOpenContactModal} />
+      </div>
+
+      {/* Modals */}
+      <ExperienceModal
+        experience={selectedExperience}
+        isOpen={isExperienceModalOpen}
+        onClose={handleCloseExperienceModal}
+      />
+
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={handleCloseContactModal}
+      />
+
+      {/* Sound Control (Optional) */}
+      <motion.button
+        onClick={() => soundManager.toggleMute()}
+        className="fixed bottom-4 right-20 z-50 w-12 h-12 bg-black/80 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        title={soundManager.isSoundMuted() ? "Enable Sound" : "Mute Sound"}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showNavigation ? 1 : 0 }}
+        transition={{ delay: 2 }}
+      >
+        <span className="text-xs">
+          {soundManager.isSoundMuted() ? "🔇" : "🔊"}
+        </span>
+      </motion.button>
+
+      {/* Accessibility */}
+      <div className="sr-only" aria-live="polite">
+        Currently viewing: {activeSection}
       </div>
     </div>
   );
-};
-
-export default Index;
+}
