@@ -393,7 +393,6 @@ export default function ExperienceSection({
             ))}
           </>
         )}
-        )}
 
         {experience.interactiveType === 'stars' && (
           <>
