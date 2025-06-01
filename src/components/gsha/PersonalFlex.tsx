@@ -30,15 +30,15 @@ export default function PersonalFlex() {
       />
 
       <div className="relative z-10 max-w-6xl mx-auto text-center px-4">
-        {/* Logo Animation - Mathematically centered */}
+        {/* Logo Animation - Mathematically centered with breathing room */}
         <motion.div
-          className="flex items-center justify-center space-x-16 mb-16 min-h-[200px]"
+          className="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-16 mb-20 min-h-[200px] py-12"
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
         >
-          {/* Your Logo */}
+          {/* Your Logo - Always Left (or top on mobile) */}
           <motion.div
             className="relative"
             initial={{ x: -50, opacity: 0 }}
@@ -47,13 +47,15 @@ export default function PersonalFlex() {
             transition={{ duration: 1, delay: 0.3 }}
           >
             <div
-              className="w-32 h-32 bg-black border-2 border-white/30 rounded-xl flex items-center justify-center backdrop-blur-sm"
+              className="w-24 h-24 md:w-32 md:h-32 bg-black border-2 border-white/30 rounded-xl flex items-center justify-center backdrop-blur-sm"
               style={{
                 boxShadow:
                   "0 0 40px rgba(255,255,255,0.1), inset 0 0 20px rgba(255,255,255,0.05)",
               }}
             >
-              <span className="text-white text-2xl font-bold">YOUR LOGO</span>
+              <span className="text-white text-lg md:text-2xl font-bold">
+                YOUR LOGO
+              </span>
             </div>
 
             {/* Glow effect */}
@@ -73,7 +75,7 @@ export default function PersonalFlex() {
 
           {/* Connecting spark */}
           <motion.div
-            className="relative"
+            className="relative order-first md:order-none"
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
@@ -110,7 +112,7 @@ export default function PersonalFlex() {
             ))}
           </motion.div>
 
-          {/* Mosaic Logo */}
+          {/* Mosaic Logo - Always Right (or bottom on mobile) */}
           <motion.div
             className="relative"
             initial={{ x: 50, opacity: 0 }}
@@ -119,13 +121,15 @@ export default function PersonalFlex() {
             transition={{ duration: 1, delay: 0.3 }}
           >
             <div
-              className="w-32 h-32 bg-black border-2 border-white/30 rounded-xl flex items-center justify-center backdrop-blur-sm"
+              className="w-24 h-24 md:w-32 md:h-32 bg-black border-2 border-white/30 rounded-xl flex items-center justify-center backdrop-blur-sm"
               style={{
                 boxShadow:
                   "0 0 40px rgba(255,255,255,0.1), inset 0 0 20px rgba(255,255,255,0.05)",
               }}
             >
-              <span className="text-white text-2xl font-bold">MOSAIC</span>
+              <span className="text-white text-lg md:text-2xl font-bold">
+                MOSAIC
+              </span>
             </div>
 
             {/* Glow effect */}
@@ -144,16 +148,16 @@ export default function PersonalFlex() {
           </motion.div>
         </motion.div>
 
-        {/* Quote - With ample breathing room */}
+        {/* Quote - With ample breathing room (120px spacing) */}
         <motion.div
-          className="mb-16 py-12"
+          className="mb-20 py-12 px-4 md:px-8"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 1.2 }}
         >
           <motion.h2
-            className="text-4xl md:text-6xl lg:text-7xl font-['Permanent_Marker'] text-white leading-tight"
+            className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-['Permanent_Marker'] text-white leading-tight max-w-5xl mx-auto"
             style={{
               textShadow: "0 0 30px rgba(255,140,0,0.3)",
             }}
@@ -174,13 +178,13 @@ export default function PersonalFlex() {
 
         {/* Subheadline */}
         <motion.div
-          className="mb-16"
+          className="mb-20 px-4"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 1.5 }}
         >
-          <p className="text-lg md:text-xl text-white/80 font-serif">
+          <p className="text-lg md:text-xl text-white/80 font-serif max-w-3xl mx-auto">
             Event experience and concept by{" "}
             <span className="text-white font-semibold">Your Name</span>,
             <span className="text-orange-400"> Mosaic Creative Lead</span>.

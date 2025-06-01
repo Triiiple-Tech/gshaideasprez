@@ -66,9 +66,10 @@ export default function Navigation({
           className={`
             w-14 h-14 rounded-full border-2 backdrop-blur-sm
             transition-all duration-300 relative overflow-hidden
-            ${isActive
-              ? 'bg-white/20 border-white shadow-lg shadow-white/50 scale-110'
-              : 'bg-black/20 border-white/30 hover:bg-white/10'
+            ${
+              isActive
+                ? "bg-white/20 border-white shadow-lg shadow-white/50 scale-110"
+                : "bg-black/20 border-white/30 hover:bg-white/10"
             }
           `}
           style={{
@@ -123,11 +124,11 @@ export default function Navigation({
         <motion.div
           className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-300"
           style={{
-            background: `radial-gradient(circle, ${section.color} 0%, transparent 70%)`
+            background: `radial-gradient(circle, ${section.color} 0%, transparent 70%)`,
           }}
           whileHover={{
             scale: [1, 1.1, 1],
-            opacity: [0, 0.5, 0.3]
+            opacity: [0, 0.5, 0.3],
           }}
           transition={{ duration: 0.6 }}
         />
@@ -137,15 +138,18 @@ export default function Navigation({
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
           whileHover={{
             scale: [1, 1.2, 1],
-            rotate: [0, 10, -10, 0]
+            rotate: [0, 10, -10, 0],
           }}
           transition={{ duration: 0.8 }}
         >
           <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">
-            {section.id === 'inferno' ? '🔥' : section.id === 'constellation' ? '⭐' : '✨'}
+            {section.id === "inferno"
+              ? "🔥"
+              : section.id === "constellation"
+                ? "⭐"
+                : "✨"}
           </span>
         </motion.div>
-        />
       </motion.button>
     );
   };
