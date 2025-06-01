@@ -289,7 +289,7 @@ const InteractiveVisual = ({
 
   return (
     <div
-      className="w-full h-64 md:h-80 border border-white/20 rounded-xl overflow-hidden bg-black/20 backdrop-blur-sm"
+      className="w-full h-80 md:h-96 border border-white/20 rounded-2xl overflow-hidden bg-black/20 backdrop-blur-sm shadow-2xl hover:shadow-3xl transition-shadow duration-300"
       onClick={handleInteraction}
       onTouchStart={handleInteraction}
     >
@@ -413,23 +413,23 @@ export default function ExperienceSection({
         )}
       </div>
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
         <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 50 }}
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
         >
           <h2
-            className="text-5xl md:text-7xl font-['Permanent_Marker'] text-white mb-4"
-            style={{ textShadow: `0 0 30px ${experience.color}50` }}
+            className="text-4xl md:text-6xl lg:text-7xl font-['Permanent_Marker'] text-white mb-6"
+            style={{ textShadow: `0 0 40px ${experience.color}60` }}
           >
             {experience.name}
           </h2>
           <p
-            className="text-xl md:text-2xl font-serif text-center max-w-3xl mx-auto"
+            className="text-xl md:text-2xl font-serif text-center max-w-4xl mx-auto leading-relaxed"
             style={{ color: experience.color }}
           >
             {experience.tagline}
@@ -438,21 +438,20 @@ export default function ExperienceSection({
 
         {/* Interactive Visual */}
         <motion.div
-          className="mb-16"
-          initial={{ opacity: 0, scale: 0.9 }}
+          className="mb-20"
+          initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
           <InteractiveVisual
             type={experience.interactiveType}
             color={experience.color}
           />
-          <p className="text-white/60 text-center mt-4 text-sm">
+          <p className="text-white/70 text-center mt-6 text-base max-w-2xl mx-auto">
             Tap or hover to interact • {experience.description}
           </p>
         </motion.div>
-
         {/* Story Panels */}
         <div className="grid md:grid-cols-3 gap-8 mb-12">
           <PhaseCard
