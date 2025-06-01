@@ -9,7 +9,6 @@ import ClosingCTA from "@/components/gsha/ClosingCTA";
 import ExperienceModal from "@/components/gsha/ExperienceModal";
 import ContactModal from "@/components/gsha/ContactModal";
 import ParticleBackground from "@/components/gsha/ParticleBackground";
-import DebugTest from "@/components/gsha/DebugTest";
 import { experiences, ExperienceData } from "@/lib/gsha-data";
 import { initializeSound, soundManager, playIgniteSound } from "@/lib/sounds";
 
@@ -199,9 +198,6 @@ export default function Index() {
       <div className="sr-only" aria-live="polite">
         Currently viewing: {activeSection}
       </div>
-
-      {/* Debug Test */}
-      <DebugTest />
     </div>
   );
 }
