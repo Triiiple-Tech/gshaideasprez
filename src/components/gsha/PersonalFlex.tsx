@@ -11,8 +11,8 @@ export default function PersonalFlex() {
       id="personal"
       className="min-h-screen py-16 px-6 bg-black relative overflow-hidden flex items-center justify-center"
       initial={{ opacity: 0 }}
-      animate={{ opacity: isInView ? 1 : 0.6 }}
-      transition={{ duration: 0.6 }}
+      animate={{ opacity: isInView ? 1 : 0.8 }}
+      transition={{ duration: 0.4 }}
     >
       {/* Cinematic background */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />

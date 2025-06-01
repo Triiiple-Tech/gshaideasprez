@@ -18,8 +18,19 @@ export default function HeroSection({ onIgniteClick }: HeroSectionProps) {
       // Show all elements after typing completes
       setTimeout(() => {
         setShowElements(true);
-      }, 500);
+      }, 300);
     }
+  }, [isTypingComplete]);
+
+  // Auto-start elements if typing doesn't complete (fallback)
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => {
+      if (!isTypingComplete) {
+        setIsTypingComplete(true);
+      }
+    }, 5000);
+
+    return () => clearTimeout(fallbackTimer);
   }, [isTypingComplete]);
 
   const handleIgniteClick = () => {

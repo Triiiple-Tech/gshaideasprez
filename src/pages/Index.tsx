@@ -119,14 +119,12 @@ export default function Index() {
       {/* Particle Background */}
       <ParticleBackground intensity={0.8} />
 
-      {/* Navigation */}
-      {showNavigation && (
-        <Navigation
-          activeSection={activeSection}
-          onSectionClick={handleSectionClick}
-          scrollProgress={scrollProgress}
-        />
-      )}
+      {/* Navigation - Show after hero animation completes */}
+      <Navigation
+        activeSection={activeSection}
+        onSectionClick={handleSectionClick}
+        scrollProgress={scrollProgress}
+      />
 
       {/* Hero Section */}
       <div ref={registerSectionRef("hero")}>

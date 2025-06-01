@@ -108,10 +108,9 @@ export default function Navigation({
 
         {/* Label */}
         <motion.span
-          className="absolute left-1/2 transform -translate-x-1/2 text-sm text-white/80 whitespace-nowrap font-medium"
-          style={{ top: "90px" }}
+          className="absolute top-20 left-1/2 transform -translate-x-1/2 text-xs text-white/70 whitespace-nowrap font-medium"
           initial={{ opacity: 0 }}
-          animate={{ opacity: isActive ? 1 : 0.7 }}
+          animate={{ opacity: isActive ? 1 : 0.6 }}
           whileHover={{ opacity: 1 }}
         >
           {section.name}
@@ -229,17 +228,13 @@ export default function Navigation({
 
   return (
     <>
-      {/* Desktop Navigation - Prominently positioned at top */}
+      {/* Desktop Navigation - Responsive and contextual positioning */}
       <motion.nav
-        className="fixed z-40 bg-black/30 backdrop-blur-sm border border-white/30 rounded-full px-10 py-4 shadow-2xl"
-        style={{
-          left: "175px",
-          top: "64px",
-          margin: "auto 0",
-        }}
-        initial={{ opacity: 0, y: -50 }}
+        className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40 bg-black/30 backdrop-blur-sm border border-white/30 rounded-full px-8 py-3 shadow-2xl"
+        initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.5 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+      >
       >
         <div className="flex items-center space-x-6">
           {sections.map((section, index) => (

@@ -169,8 +169,8 @@ export default function TechExplainer() {
       id="tech"
       className="min-h-screen py-16 px-6 bg-black relative overflow-hidden flex items-center"
       initial={{ opacity: 0 }}
-      animate={{ opacity: isInView ? 1 : 0.6 }}
-      transition={{ duration: 0.6 }}
+      animate={{ opacity: isInView ? 1 : 0.8 }}
+      transition={{ duration: 0.4 }}
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20" />
