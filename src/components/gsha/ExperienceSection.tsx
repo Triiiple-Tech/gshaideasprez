@@ -441,7 +441,6 @@ export default function ExperienceSection({
             </svg>
           </>
         )}
-        )}
 
         {experience.interactiveType === 'maze' && (
           <svg className="absolute inset-0 w-full h-full opacity-15">
