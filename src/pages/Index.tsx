@@ -19,7 +19,7 @@ export default function Index() {
     useState<ExperienceData | null>(null);
   const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [showNavigation, setShowNavigation] = useState(false);
+  const [showNavigation, setShowNavigation] = useState(true); // Show navigation immediately
 
   const sectionsRef = useRef<{ [key: string]: HTMLElement }>({});
 
@@ -81,7 +81,6 @@ export default function Index() {
   // Handle ignite button click
   const handleIgniteClick = () => {
     playIgniteSound();
-    setShowNavigation(true);
 
     // Scroll to first experience with a fire animation
     setTimeout(() => {
