@@ -208,9 +208,8 @@ export default function Navigation({
         {/* Progress Bar */}
         <motion.div
           className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 via-purple-500 to-blue-500 z-30"
-          style={{ scaleX: scrollProgress }}
+          style={{ scaleX: scrollProgress, transformOrigin: "left" }}
           initial={{ scaleX: 0 }}
-          transformOrigin="left"
         />
       </>
     );
@@ -242,9 +241,8 @@ export default function Navigation({
       >
         <motion.div
           className="h-full bg-white/30"
-          style={{ scaleX: scrollProgress }}
+          style={{ scaleX: scrollProgress, transformOrigin: "left" }}
           initial={{ scaleX: 0 }}
-          transformOrigin="left"
         />
       </motion.div>
     </>
