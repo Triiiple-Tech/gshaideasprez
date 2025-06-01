@@ -177,31 +177,46 @@ export default function Index() {
         onClose={handleCloseContactModal}
       />
 
-      {/* Sound Control - Positioned at top right */}
+      {/* Sound Control - Clear positioning away from logos */}
       <motion.button
         onClick={() => soundManager.toggleMute()}
-        className="fixed top-6 right-6 z-50 w-12 h-12 bg-black/80 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center text-white hover:bg-white/10 transition-colors shadow-lg"
+        className="fixed top-6 right-6 z-50 w-14 h-14 bg-black/80 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 shadow-xl"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         title={soundManager.isSoundMuted() ? "Enable Sound" : "Mute Sound"}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 2, duration: 0.5 }}
+        style={{
+          boxShadow: soundManager.isSoundMuted()
+            ? "0 0 20px rgba(255,255,255,0.2)"
+            : "0 0 30px rgba(0,255,0,0.4)",
+        }}
       >
-        <span className="text-sm">
+        <span className="text-lg">
           {soundManager.isSoundMuted() ? "🔇" : "🔊"}
         </span>
 
-        {/* Sound wave animation when enabled */}
+        {/* Enhanced sound wave animation when enabled */}
         {!soundManager.isSoundMuted() && (
-          <motion.div
-            className="absolute inset-0 rounded-full border-2 border-white/30"
-            animate={{
-              scale: [1, 1.4, 1],
-              opacity: [0.3, 0.8, 0.3],
-            }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
+          <>
+            <motion.div
+              className="absolute inset-0 rounded-full border-2 border-green-400/50"
+              animate={{
+                scale: [1, 1.6, 1],
+                opacity: [0.5, 0.9, 0.5],
+              }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+            <motion.div
+              className="absolute inset-0 rounded-full border border-green-400/30"
+              animate={{
+                scale: [1, 2, 1],
+                opacity: [0.3, 0, 0.3],
+              }}
+              transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+            />
+          </>
         )}
       </motion.button>
 

@@ -348,68 +348,147 @@ export default function ExperienceSection({
 
       {/* Thematic background animations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {experience.interactiveType === "flames" && (
+        {experience.interactiveType === 'flames' && (
           <>
-            {[...Array(8)].map((_, i) => (
+            {/* Bottom flame strips */}
+            {[...Array(12)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute bottom-0 w-2 h-8 bg-gradient-to-t from-orange-500/20 to-transparent"
-                style={{ left: `${10 + i * 12}%` }}
+                className="absolute bottom-0 w-3 bg-gradient-to-t from-orange-500/30 via-red-500/20 to-transparent"
+                style={{ left: `${5 + i * 8}%` }}
                 animate={{
-                  height: [20, 40, 20],
-                  opacity: [0.2, 0.6, 0.2],
+                  height: [30, 60, 30],
+                  opacity: [0.3, 0.8, 0.3],
+                  scaleX: [1, 1.2, 1]
+                }}
+                transition={{
+                  duration: 2 + Math.random() * 1.5,
+                  repeat: Infinity,
+                  delay: i * 0.2
+                }}
+              />
+            ))}
+
+            {/* Floating embers */}
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={`ember-${i}`}
+                className="absolute w-1 h-1 bg-orange-400 rounded-full"
+                style={{
+                  left: `${20 + Math.random() * 60}%`,
+                  bottom: '10%'
+                }}
+                animate={{
+                  y: [0, -100, -200],
+                  x: [0, Math.random() * 20 - 10],
+                  opacity: [0, 1, 0],
+                  scale: [0.5, 1, 0.5]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  delay: Math.random() * 3
+                }}
+              />
+            ))}
+          </>
+        )}
+        )}
+
+        {experience.interactiveType === 'stars' && (
+          <>
+            {/* Twinkling stars */}
+            {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-white/40 rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`
+                }}
+                animate={{
+                  opacity: [0.2, 1, 0.2],
+                  scale: [0.5, 1.5, 0.5]
                 }}
                 transition={{
                   duration: 3 + Math.random() * 2,
                   repeat: Infinity,
-                  delay: i * 0.4,
+                  delay: Math.random() * 3
                 }}
               />
             ))}
+
+            {/* Constellation lines */}
+            <svg className="absolute inset-0 w-full h-full opacity-20">
+              {[...Array(5)].map((_, i) => (
+                <motion.line
+                  key={i}
+                  x1={`${20 + i * 15}%`}
+                  y1={`${30 + i * 10}%`}
+                  x2={`${30 + i * 15}%`}
+                  y2={`${40 + i * 10}%`}
+                  stroke="#FFD700"
+                  strokeWidth="1"
+                  animate={{
+                    opacity: [0.1, 0.6, 0.1]
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    delay: i * 0.8
+                  }}
+                />
+              ))}
+            </svg>
           </>
         )}
+        )}
 
-        {experience.interactiveType === "stars" && (
-          <>
-            {[...Array(12)].map((_, i) => (
-              <motion.div
+        {experience.interactiveType === 'maze' && (
+          <svg className="absolute inset-0 w-full h-full opacity-15">
+            {/* Maze paths */}
+            {[...Array(4)].map((_, i) => (
+              <motion.path
                 key={i}
-                className="absolute w-1 h-1 bg-white/30 rounded-full"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                }}
+                d={`M${i * 25},80 L${i * 25 + 15},60 L${i * 25 + 30},80 L${i * 25 + 45},40`}
+                stroke={experience.color}
+                strokeWidth="2"
+                fill="none"
+                filter="drop-shadow(0 0 3px currentColor)"
                 animate={{
-                  opacity: [0.2, 0.8, 0.2],
-                  scale: [0.5, 1.2, 0.5],
+                  pathLength: [0, 1],
+                  opacity: [0.3, 0.8, 0.3]
                 }}
                 transition={{
-                  duration: 4 + Math.random() * 2,
+                  duration: 6,
                   repeat: Infinity,
-                  delay: Math.random() * 2,
+                  delay: i * 1.5,
+                  ease: "easeInOut"
                 }}
               />
             ))}
-          </>
-        )}
 
-        {experience.interactiveType === "maze" && (
-          <svg className="absolute inset-0 w-full h-full opacity-5">
-            <motion.path
-              d="M0,100 Q50,50 100,100 T200,100"
-              stroke={experience.color}
-              strokeWidth="1"
-              fill="none"
-              animate={{
-                pathLength: [0, 1, 0],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            />
+            {/* Glowing nodes */}
+            {[...Array(6)].map((_, i) => (
+              <motion.circle
+                key={i}
+                cx={`${15 + i * 15}%`}
+                cy={`${60 + (i % 2) * 20}%`}
+                r="3"
+                fill={experience.color}
+                animate={{
+                  opacity: [0.4, 1, 0.4],
+                  r: [2, 4, 2]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  delay: i * 0.5
+                }}
+              />
+            ))}
           </svg>
+        )}
         )}
       </div>
 

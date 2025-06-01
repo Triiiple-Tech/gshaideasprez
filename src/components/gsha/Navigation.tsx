@@ -145,7 +145,7 @@ export default function Navigation({
         {/* Mobile FAB */}
         <motion.button
           onClick={() => setIsOpen(!isOpen)}
-          className="fixed top-6 right-20 z-50 w-14 h-14 bg-black/80 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center text-white shadow-lg"
+          className="fixed top-6 right-24 z-50 w-14 h-14 bg-black/80 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center text-white shadow-lg"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0 }}
@@ -228,10 +228,10 @@ export default function Navigation({
 
   return (
     <>
-      {/* Desktop Navigation */}
+      {/* Desktop Navigation - Prominently positioned at top */}
       <motion.nav
-        className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40 bg-black/20 backdrop-blur-sm border border-white/20 rounded-full px-8 py-6 shadow-2xl"
-        initial={{ opacity: 0, y: 100 }}
+        className="fixed top-8 left-1/2 transform -translate-x-1/2 z-40 bg-black/30 backdrop-blur-sm border border-white/30 rounded-full px-10 py-4 shadow-2xl"
+        initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 1.5 }}
       >

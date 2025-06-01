@@ -23,12 +23,28 @@ export default function HeroSection({ onIgniteClick }: HeroSectionProps) {
   }, [isTypingComplete]);
 
   const handleIgniteClick = () => {
-    // Create flame burst effect
-    const flameBurst = document.createElement("div");
-    flameBurst.className = "fixed inset-0 pointer-events-none z-[100]";
+    // Create enhanced flame burst effect
+    const flameBurst = document.createElement('div');
+    flameBurst.className = 'fixed inset-0 pointer-events-none z-[100]';
     flameBurst.innerHTML = `
       <div class="absolute inset-0 bg-gradient-to-t from-orange-500 via-red-500 to-yellow-400 opacity-0 animate-flame-burst"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle,_rgba(255,140,0,0.8)_0%,_transparent_70%)] opacity-0" style="animation: ember-rise 1.2s ease-out forwards;"></div>
     `;
+
+    // Add enhanced flame animation styles
+    if (!document.querySelector('#enhanced-flame-styles')) {
+      const style = document.createElement('style');
+      style.id = 'enhanced-flame-styles';
+      style.textContent = `
+        @keyframes ember-rise {
+          0% { opacity: 0; transform: scale(0.5) translateY(100px); }
+          30% { opacity: 1; transform: scale(1.2) translateY(0px); }
+          70% { opacity: 0.8; transform: scale(1.5) translateY(-50px); }
+          100% { opacity: 0; transform: scale(2) translateY(-200px); }
+        }
+      `;
+      document.head.appendChild(style);
+    }
 
     document.body.appendChild(flameBurst);
 
@@ -44,8 +60,10 @@ export default function HeroSection({ onIgniteClick }: HeroSectionProps) {
     <section className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden">
       <ParticleBackground intensity={1} />
 
-      {/* Main Content Container */}
+      {/* Main Content Container - Unified Hero Block */}
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center">
+        <div className="bg-black/10 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-white/10"
+             style={{ boxShadow: '0 0 60px rgba(255, 140, 0, 0.1)' }}>
         {/* Search Bar */}
         <motion.div
           initial={{ scale: 0.9, opacity: 0, y: 30 }}
@@ -69,22 +87,21 @@ export default function HeroSection({ onIgniteClick }: HeroSectionProps) {
               </div>
             </div>
 
-            {/* Animated border */}
+            {/* Animated border - spins twice then stops */}
             <motion.div
               className="absolute inset-0 rounded-full"
               style={{
-                background:
-                  "linear-gradient(45deg, #9F32E9, #9D531F, #0C5964, #9F32E9)",
-                padding: "2px",
-                WebkitMask:
-                  "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                WebkitMaskComposite: "xor",
-                maskComposite: "exclude",
+                background: 'linear-gradient(45deg, #9F32E9, #9D531F, #0C5964, #9F32E9)',
+                padding: '2px',
+                WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                WebkitMaskComposite: 'xor',
+                maskComposite: 'exclude'
               }}
               animate={{
-                rotate: [0, 360],
+                rotate: [0, 360, 720]
               }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 4, ease: "easeInOut" }}
+            />
             />
           </div>
         </motion.div>
@@ -213,6 +230,8 @@ export default function HeroSection({ onIgniteClick }: HeroSectionProps) {
             Honours—designed for culture, clout, and connection.
           </motion.p>
         </motion.div>
+
+        </div> {/* Close unified hero block */}
       </div>
 
       {/* Fixed Corner Logos */}
