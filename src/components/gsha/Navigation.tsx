@@ -61,15 +61,14 @@ export default function Navigation({
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.1 }}
       >
-        {/* Orb */}
+        {/* Orb - Increased size to 48-56px as requested */}
         <div
           className={`
-            w-12 h-12 rounded-full border-2 backdrop-blur-sm
+            w-14 h-14 rounded-full border-2 backdrop-blur-sm
             transition-all duration-300 relative overflow-hidden
-            ${
-              isActive
-                ? "bg-white/20 border-white shadow-lg shadow-white/50"
-                : "bg-black/20 border-white/30 hover:bg-white/10"
+            ${isActive
+              ? 'bg-white/20 border-white shadow-lg shadow-white/50 scale-110'
+              : 'bg-black/20 border-white/30 hover:bg-white/10'
             }
           `}
           style={{
@@ -120,12 +119,32 @@ export default function Navigation({
           {section.name}
         </motion.span>
 
-        {/* Hover glow */}
+        {/* Hover glow with microanimation */}
         <motion.div
           className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-300"
           style={{
-            background: `radial-gradient(circle, ${section.color} 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${section.color} 0%, transparent 70%)`
           }}
+          whileHover={{
+            scale: [1, 1.1, 1],
+            opacity: [0, 0.5, 0.3]
+          }}
+          transition={{ duration: 0.6 }}
+        />
+
+        {/* Flame/star microanimation on hover */}
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          whileHover={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 10, -10, 0]
+          }}
+          transition={{ duration: 0.8 }}
+        >
+          <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+            {section.id === 'inferno' ? '🔥' : section.id === 'constellation' ? '⭐' : '✨'}
+          </span>
+        </motion.div>
         />
       </motion.button>
     );
@@ -217,14 +236,14 @@ export default function Navigation({
 
   return (
     <>
-      {/* Desktop Navigation */}
+      {/* Desktop Navigation - Positioned below search bar with proper spacing */}
       <motion.nav
-        className="fixed top-6 left-1/2 transform -translate-x-1/2 z-40 bg-black/20 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3"
+        className="fixed top-[25vh] left-1/2 transform -translate-x-1/2 z-40 bg-black/20 backdrop-blur-sm border border-white/20 rounded-full px-8 py-4"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 1 }}
       >
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center space-x-8">
           {sections.map((section, index) => (
             <OrbButton key={section.id} section={section} index={index} />
           ))}

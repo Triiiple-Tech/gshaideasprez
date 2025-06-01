@@ -175,6 +175,50 @@ export default function TechExplainer() {
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20" />
 
+      {/* Digital circuit background animations */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <svg className="absolute inset-0 w-full h-full opacity-10">
+          {[...Array(6)].map((_, i) => (
+            <motion.circle
+              key={i}
+              cx={`${20 + i * 15}%`}
+              cy={`${30 + (i % 2) * 40}%`}
+              r="2"
+              fill="#9F32E9"
+              animate={{
+                opacity: [0.2, 0.8, 0.2],
+                r: [1, 3, 1],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                delay: i * 0.5,
+              }}
+            />
+          ))}
+
+          {[...Array(4)].map((_, i) => (
+            <motion.line
+              key={`line-${i}`}
+              x1={`${25 + i * 20}%`}
+              y1="20%"
+              x2={`${25 + i * 20}%`}
+              y2="80%"
+              stroke="#0C5964"
+              strokeWidth="1"
+              animate={{
+                opacity: [0.1, 0.4, 0.1],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                delay: i * 0.8,
+              }}
+            />
+          ))}
+        </svg>
+      </div>
+
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div

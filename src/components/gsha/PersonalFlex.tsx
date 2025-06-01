@@ -29,10 +29,10 @@ export default function PersonalFlex() {
         }}
       />
 
-      <div className="relative z-10 max-w-6xl mx-auto text-center">
-        {/* Logo Animation */}
+      <div className="relative z-10 max-w-6xl mx-auto text-center px-4">
+        {/* Logo Animation - Mathematically centered */}
         <motion.div
-          className="flex items-center justify-center space-x-16 mb-16"
+          className="flex items-center justify-center space-x-16 mb-16 min-h-[200px]"
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -144,9 +144,9 @@ export default function PersonalFlex() {
           </motion.div>
         </motion.div>
 
-        {/* Quote */}
+        {/* Quote - With ample breathing room */}
         <motion.div
-          className="mb-12"
+          className="mb-16 py-12"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

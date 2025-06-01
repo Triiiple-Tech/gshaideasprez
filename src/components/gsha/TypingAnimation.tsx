@@ -8,19 +8,21 @@ interface TypingAnimationProps {
   onComplete?: () => void;
   flickerWord?: string;
   flickerReplace?: string;
+  autoStart?: boolean;
 }
 
 export default function TypingAnimation({
   text,
   className = "",
-  speed = 100,
+  speed = 80, // ~50 WPM (average typing speed)
   onComplete,
   flickerWord,
   flickerReplace,
+  autoStart = true,
 }: TypingAnimationProps) {
-  const [displayText, setDisplayText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
+  const [displayText, setDisplayText] = useState(autoStart ? "" : text);
+  const [currentIndex, setCurrentIndex] = useState(autoStart ? 0 : text.length);
+  const [isComplete, setIsComplete] = useState(!autoStart);
   const [showCursor, setShowCursor] = useState(true);
   const [isFlickering, setIsFlickering] = useState(false);
 

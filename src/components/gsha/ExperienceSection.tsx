@@ -346,6 +346,73 @@ export default function ExperienceSection({
         }}
       />
 
+      {/* Thematic background animations */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {experience.interactiveType === "flames" && (
+          <>
+            {[...Array(8)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute bottom-0 w-2 h-8 bg-gradient-to-t from-orange-500/20 to-transparent"
+                style={{ left: `${10 + i * 12}%` }}
+                animate={{
+                  height: [20, 40, 20],
+                  opacity: [0.2, 0.6, 0.2],
+                }}
+                transition={{
+                  duration: 3 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: i * 0.4,
+                }}
+              />
+            ))}
+          </>
+        )}
+
+        {experience.interactiveType === "stars" && (
+          <>
+            {[...Array(12)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-white/30 rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
+                animate={{
+                  opacity: [0.2, 0.8, 0.2],
+                  scale: [0.5, 1.2, 0.5],
+                }}
+                transition={{
+                  duration: 4 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 2,
+                }}
+              />
+            ))}
+          </>
+        )}
+
+        {experience.interactiveType === "maze" && (
+          <svg className="absolute inset-0 w-full h-full opacity-5">
+            <motion.path
+              d="M0,100 Q50,50 100,100 T200,100"
+              stroke={experience.color}
+              strokeWidth="1"
+              fill="none"
+              animate={{
+                pathLength: [0, 1, 0],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
+          </svg>
+        )}
+      </div>
+
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div

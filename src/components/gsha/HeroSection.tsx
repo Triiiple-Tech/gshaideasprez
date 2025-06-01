@@ -36,34 +36,106 @@ export default function HeroSection({ onIgniteClick }: HeroSectionProps) {
 
   const handleIgniteClick = () => {
     setIsIdle(false);
-    onIgniteClick();
+
+    // Create flame burst effect
+    const flameBurst = document.createElement("div");
+    flameBurst.className = "fixed inset-0 pointer-events-none z-50";
+    flameBurst.innerHTML = `
+      <div class="absolute inset-0 bg-gradient-to-t from-orange-500 via-red-500 to-yellow-400 opacity-0 animate-[flame-burst_1.2s_ease-out_forwards]"></div>
+    `;
+
+    // Add flame burst animation to CSS if not exists
+    if (!document.querySelector("#flame-burst-styles")) {
+      const style = document.createElement("style");
+      style.id = "flame-burst-styles";
+      style.textContent = `
+        @keyframes flame-burst {
+          0% { opacity: 0; transform: scale(0) rotate(0deg); }
+          20% { opacity: 0.8; transform: scale(1.2) rotate(5deg); }
+          50% { opacity: 1; transform: scale(1.5) rotate(-3deg); }
+          100% { opacity: 0; transform: scale(2) rotate(10deg); }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    document.body.appendChild(flameBurst);
+
+    setTimeout(() => {
+      document.body.removeChild(flameBurst);
+      onIgniteClick();
+    }, 1200);
   };
 
   return (
-    <section className="relative min-h-screen bg-black flex flex-col items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen bg-black flex flex-col overflow-hidden">
       <ParticleBackground intensity={1} />
 
-      {/* Main Content */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 text-center">
+      {/* Main Content - Positioned at 10-12% from top */}
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 text-center mt-[10vh] flex-1 flex flex-col justify-start">
         {/* Search Bar */}
         <motion.div
           initial={{ scale: 0.8, opacity: 0, y: 50 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="relative mb-8"
+          className="relative mb-6"
         >
           <div className="relative bg-white rounded-full p-4 shadow-2xl border border-white/20 backdrop-blur-sm">
             <div className="flex items-center space-x-4">
               <Search className="w-6 h-6 text-gray-400 flex-shrink-0" />
-              <div className="flex-1 text-left">
-                <TypingAnimation
-                  text="How do you ignite a room full of Canada's boldest marketers?"
-                  className="text-lg md:text-xl text-gray-800"
-                  speed={50}
-                  onComplete={() => setIsTypingComplete(true)}
-                  flickerWord="ignite"
-                  flickerReplace="set on fire"
-                />
+              <div className="flex items-center justify-center space-x-10 mb-4">
+                {/* Your Logo - Always Left */}
+                <motion.div
+                  initial={{ x: 0, y: 0, scale: 1 }}
+                  animate={
+                    logoAnimationComplete
+                      ? {
+                          x: -window.innerWidth / 2 + 80,
+                          y: window.innerHeight / 2 - 60,
+                          scale: 0.4,
+                        }
+                      : {}
+                  }
+                  transition={{ duration: 1, delay: 2 }}
+                  className="text-white text-xl font-bold bg-black px-4 py-2 rounded-lg border border-white/20"
+                  style={{
+                    filter: "drop-shadow(0 0 20px rgba(255,255,255,0.3))",
+                    backdropFilter: "blur(10px)",
+                  }}
+                >
+                  YOUR LOGO
+                </motion.div>
+
+                <motion.div
+                  initial={{ scale: 1, rotate: 0 }}
+                  animate={{ scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  className="text-3xl"
+                >
+                  ✨
+                </motion.div>
+
+                {/* Mosaic Logo - Always Right */}
+                <motion.div
+                  initial={{ x: 0, y: 0, scale: 1 }}
+                  animate={
+                    logoAnimationComplete
+                      ? {
+                          x: window.innerWidth / 2 - 80,
+                          y: window.innerHeight / 2 - 60,
+                          scale: 0.4,
+                        }
+                      : {}
+                  }
+                  transition={{ duration: 1, delay: 2 }}
+                  className="text-white text-xl font-bold bg-black px-4 py-2 rounded-lg border border-white/20"
+                  style={{
+                    filter: "drop-shadow(0 0 20px rgba(255,255,255,0.3))",
+                    backdropFilter: "blur(10px)",
+                  }}
+                >
+                  MOSAIC
+                </motion.div>
               </div>
             </div>
 
@@ -96,7 +168,7 @@ export default function HeroSection({ onIgniteClick }: HeroSectionProps) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="mb-8"
+              className="mb-6"
             >
               <div className="flex items-center justify-center space-x-8 mb-4">
                 <motion.div
@@ -149,7 +221,7 @@ export default function HeroSection({ onIgniteClick }: HeroSectionProps) {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
-              className="mb-12"
+              className="mb-8"
             >
               <Button
                 onClick={handleIgniteClick}
@@ -207,7 +279,7 @@ export default function HeroSection({ onIgniteClick }: HeroSectionProps) {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.5 }}
-              className="text-center"
+              className="text-center mt-8"
             >
               <motion.h1
                 className="text-5xl md:text-7xl font-['Permanent_Marker'] text-white mb-6"
@@ -237,21 +309,23 @@ export default function HeroSection({ onIgniteClick }: HeroSectionProps) {
         </AnimatePresence>
       </div>
 
-      {/* Fixed logos for after animation */}
+      {/* Fixed logos for after animation - Consistent positioning */}
       <AnimatePresence>
         {logoAnimationComplete && (
           <>
+            {/* Your Logo - Always Left */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="fixed bottom-4 right-4 z-50 text-white text-sm font-bold bg-black/80 px-3 py-1 rounded border border-white/20 backdrop-blur-sm"
+              className="fixed bottom-6 left-6 z-50 text-white text-sm font-bold bg-black/80 px-3 py-2 rounded border border-white/20 backdrop-blur-sm"
             >
               YOUR LOGO
             </motion.div>
+            {/* Mosaic Logo - Always Right */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="fixed bottom-4 left-4 z-50 text-white text-sm font-bold bg-black/80 px-3 py-1 rounded border border-white/20 backdrop-blur-sm"
+              className="fixed bottom-6 right-6 z-50 text-white text-sm font-bold bg-black/80 px-3 py-2 rounded border border-white/20 backdrop-blur-sm"
             >
               MOSAIC
             </motion.div>
