@@ -242,10 +242,10 @@ export default function Navigation({
     <>
       {/* Desktop Navigation - Positioned below search bar with proper spacing */}
       <motion.nav
-        className="fixed top-[25vh] left-1/2 transform -translate-x-1/2 z-40 bg-black/20 backdrop-blur-sm border border-white/20 rounded-full px-8 py-4"
+        className="fixed top-[35vh] left-1/2 transform -translate-x-1/2 z-40 bg-black/20 backdrop-blur-sm border border-white/20 rounded-full px-8 py-4"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1 }}
+        transition={{ duration: 0.8, delay: 2 }}
       >
         <div className="flex items-center space-x-8">
           {sections.map((section, index) => (
