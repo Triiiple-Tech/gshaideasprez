@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,19 +37,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -97,5 +92,235 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family:
+      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar for webkit browsers */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #000;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff4500, #9f32e9);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ff6500, #bf52f9);
+  }
+}
+
+@layer components {
+  /* Custom font families */
+  .font-permanent-marker {
+    font-family: "Permanent Marker", cursive;
+  }
+
+  .font-serif {
+    font-family: "Times New Roman", serif;
+  }
+
+  /* Glass morphism effects */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-dark {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Ember glow effect */
+  .ember-glow {
+    filter: drop-shadow(0 0 10px rgba(255, 140, 0, 0.8))
+      drop-shadow(0 0 20px rgba(255, 140, 0, 0.6))
+      drop-shadow(0 0 30px rgba(255, 140, 0, 0.4));
+  }
+
+  /* Text glow effects */
+  .text-glow-orange {
+    text-shadow:
+      0 0 10px rgba(255, 140, 0, 0.8),
+      0 0 20px rgba(255, 140, 0, 0.6),
+      0 0 30px rgba(255, 140, 0, 0.4);
+  }
+
+  .text-glow-white {
+    text-shadow:
+      0 0 10px rgba(255, 255, 255, 0.8),
+      0 0 20px rgba(255, 255, 255, 0.6);
+  }
+}
+
+@layer utilities {
+  /* Custom animations */
+  @keyframes flicker {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes ember-drift {
+    0% {
+      transform: translateY(0px) translateX(0px);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100px) translateX(20px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes spark-burst {
+    0% {
+      transform: scale(0) rotate(0deg);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1) rotate(180deg);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(2) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes heat-haze {
+    0%,
+    100% {
+      transform: translateX(0px) skewX(0deg);
+    }
+    25% {
+      transform: translateX(2px) skewX(1deg);
+    }
+    75% {
+      transform: translateX(-2px) skewX(-1deg);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      box-shadow:
+        0 0 20px rgba(255, 140, 0, 0.4),
+        0 0 40px rgba(255, 140, 0, 0.2);
+    }
+    50% {
+      box-shadow:
+        0 0 30px rgba(255, 140, 0, 0.8),
+        0 0 60px rgba(255, 140, 0, 0.4);
+    }
+  }
+
+  /* Animation classes */
+  .animate-flicker {
+    animation: flicker 2s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-ember-drift {
+    animation: ember-drift 4s linear infinite;
+  }
+
+  .animate-spark-burst {
+    animation: spark-burst 0.6s ease-out forwards;
+  }
+
+  .animate-heat-haze {
+    animation: heat-haze 2s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-flicker,
+    .animate-float,
+    .animate-ember-drift,
+    .animate-spark-burst,
+    .animate-heat-haze,
+    .animate-pulse-glow {
+      animation: none;
+    }
+
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .glass,
+    .glass-dark {
+      background: rgba(0, 0, 0, 0.9);
+      border: 2px solid #fff;
+    }
+
+    .ember-glow,
+    .text-glow-orange,
+    .text-glow-white {
+      filter: none;
+      text-shadow: none;
+    }
+  }
+
+  /* Custom utilities */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .transform-style-preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .cursor-spark {
+    cursor:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='%23ff8c00'%3E%3Cpath d='M12 2l3 7h7l-5.5 4.5L18 21l-6-4.5L6 21l1.5-7.5L2 9h7z'/%3E%3C/svg%3E")
+        12 12,
+      pointer;
   }
 }
