@@ -157,10 +157,10 @@ export default function Navigation({
   if (isMobile) {
     return (
       <>
-        {/* Mobile FAB */}
+        {/* Mobile FAB - Positioned to avoid sound button */}
         <motion.button
           onClick={() => setIsOpen(!isOpen)}
-          className="fixed top-4 right-4 z-50 w-14 h-14 bg-black/80 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center text-white"
+          className="fixed top-20 right-4 z-50 w-14 h-14 bg-black/80 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center text-white"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -196,7 +196,7 @@ export default function Navigation({
               initial={{ opacity: 0, scale: 0.9, y: -20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: -20 }}
-              className="fixed top-20 right-4 z-40 bg-black/90 backdrop-blur-sm border border-white/30 rounded-xl p-4 space-y-3"
+              className="fixed top-36 right-4 z-40 bg-black/90 backdrop-blur-sm border border-white/30 rounded-xl p-4 space-y-3"
             >
               {sections.map((section, index) => (
                 <motion.button
